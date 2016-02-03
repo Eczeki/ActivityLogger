@@ -29,7 +29,7 @@ void WindowRecorder::trackedPrograms()
 		/* Read each program name from the config file and store it in the map */
 		while (std::getline(in, program))
 		{
-			programMap[program] = true;
+			programMap[program] = 0;
 		}
 
 		in.close();
@@ -37,13 +37,21 @@ void WindowRecorder::trackedPrograms()
 	
 }
 
-/* Takes a screenshot of the whole desktop and stores it as std::string name */
+/* Takes a screenshot of the whole user screen area and stores the image in a BMP */
 void WindowRecorder::takeScreenshot(std::string name)
 {
 	HDC screen = CreateDC(TEXT("DISPLAY"), 0, 0, 0);
 	HDC dest = CreateCompatibleDC(screen);
+	std::cout << programMap[name] << std::endl;
+	name.append(std::to_string(programMap[name]++) + ".bmp");
+
+#ifdef UNICODE	
+	std::wstring newString = stringToWstring(name);	
+	wchar_t *out = (wchar_t *)newString.c_str();
+#else
 	char* out = _strdup(name.c_str());
-	
+#endif
+
 	RECT rect;
 	GetWindowRect(GetDesktopWindow(), &rect);
 
@@ -54,6 +62,19 @@ void WindowRecorder::takeScreenshot(std::string name)
 	CreateBMPFile(GetDesktopWindow(), (LPTSTR)out, CreateBitmapInfoStruct(GetDesktopWindow(), bmp), bmp, dest);
 
 	DeleteDC(screen);	
+}
+
+/* Converts string to wstring. Credit: http://stackoverflow.com/questions/27220/how-to-convert-stdstring-to-lpcwstr-in-c-unicode */
+std::wstring WindowRecorder::stringToWstring(const std::string &s)
+{
+	int len;
+	int slength = (int)s.length() + 1;
+	len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
+	wchar_t* buf = new wchar_t[len];
+	MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
+	std::wstring r(buf);
+	delete[] buf;
+	return r;
 }
 
 /* Creates a Bitmap of a window. Credit: https://msdn.microsoft.com/en-us/library/windows/desktop/dd145119(v=vs.85).aspx */
@@ -121,7 +142,6 @@ PBITMAPINFO WindowRecorder::CreateBitmapInfoStruct(HWND hwnd, HBITMAP hBmp)
      return pbmi; 
 }
 
-/* Stores a Bitmap to a File. Credit: https://msdn.microsoft.com/en-us/library/windows/desktop/dd145119(v=vs.85).aspx */
 void WindowRecorder::CreateBMPFile(HWND hwnd, LPTSTR pszFile, PBITMAPINFO pbi,
 	HBITMAP hBMP, HDC hDC)
 {
@@ -246,7 +266,7 @@ void WindowRecorder::outputWindowName()
 			if (programMap.find(pastWindowName) != programMap.end())
 			{
 				std::cout << "taking screen" << std::endl;
-				takeScreenshot("Testy.bmp");
+				takeScreenshot(pastWindowName);
 			}
 
 			out.open("log.txt", std::ofstream::app);
