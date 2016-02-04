@@ -272,7 +272,7 @@ void WindowRecorder::outputWindowName()
 			out.open("log.txt", std::ofstream::app);
 			if (!start)
 			{
-				out << "WINDOW: " << pastWindowName << std::endl;
+				out << std::endl << "WINDOW: " << pastWindowName << std::endl;
 				start = true;
 			}
 			else

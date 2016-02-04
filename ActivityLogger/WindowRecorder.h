@@ -4,15 +4,8 @@
 #include <iostream>
 #include <time.h>
 #include <fstream>
-#include <stdlib.h>
 #include <map>
 #include <Windows.h>
-
-#ifdef UNICODE
-#define UNI true
-#else
-#define UNI FALSE
-#endif
 
 /*
  * This class implements a thread that is constantly running to record
