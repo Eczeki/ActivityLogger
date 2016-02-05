@@ -7,7 +7,7 @@ WindowRecorder::WindowRecorder()
 	newWindow = false;
 	pastWindowName = "";
 	timeStart = time(0);
-	timeInSeconds = 0.0;
+	timeInSeconds = 0.0;	
 
 	trackedPrograms();
 }

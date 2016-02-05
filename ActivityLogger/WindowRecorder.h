@@ -23,7 +23,7 @@ private:
 	std::string pastWindowName;	/* To compare and determine if the window has been changed*/
 	time_t timeStart;			/* To record how much time the user has been using an application */
 	double timeInSeconds;		/* Time spent in each application */
-	std::map<std::string, int> programMap;	/* Stores the tracked programs names*/
+	std::map<std::string, int> programMap;	/* Stores the tracked programs names*/	
 
 	void trackedPrograms();
 	void takeScreenshot(std::string name);
@@ -34,7 +34,7 @@ private:
 public:
 	WindowRecorder();
 	~WindowRecorder();
-	std::string getWindowName();
+	std::string getWindowName();	
 	double getTime();	
 	void outputWindowName();	
 	bool windowChange();	
