@@ -3,10 +3,12 @@
 
 class ActivityLog
 {
-private:
-	HHOOK hhkLowLevelKybd;
 public:
 	ActivityLog();
 	~ActivityLog();
+
+private:
+	HHOOK hhkLowLevelKybd;
+
 };
 

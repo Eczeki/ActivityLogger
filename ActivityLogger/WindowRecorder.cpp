@@ -40,6 +40,7 @@ void WindowRecorder::trackedPrograms()
 /* Takes a screenshot of the whole user screen area and stores the image in a BMP */
 void WindowRecorder::takeScreenshot(std::string name)
 {
+	RECT rect;
 	HDC screen = CreateDC(TEXT("DISPLAY"), 0, 0, 0);
 	HDC dest = CreateCompatibleDC(screen);
 	std::cout << programMap[name] << std::endl;
@@ -51,8 +52,7 @@ void WindowRecorder::takeScreenshot(std::string name)
 #else
 	char* out = _strdup(name.c_str());
 #endif
-
-	RECT rect;
+	
 	GetWindowRect(GetDesktopWindow(), &rect);
 
 	HBITMAP bmp = CreateCompatibleBitmap(screen, rect.right, rect.bottom);

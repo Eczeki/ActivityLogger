@@ -15,6 +15,16 @@
 
 class WindowRecorder
 {
+public:
+	WindowRecorder();
+	~WindowRecorder();
+	std::string getWindowName();
+	double getTime();
+	void outputWindowName();
+	bool windowChange();
+	void start();
+	void stop();
+
 private:
 	bool stopped;				/* To tell the thread when to stop*/
 	bool newWindow;				/* To signal when there is a change of window */
@@ -31,14 +41,6 @@ private:
 	PBITMAPINFO CreateBitmapInfoStruct(HWND hwnd, HBITMAP hBmp);
 	void CreateBMPFile(HWND hwnd, LPTSTR pszFile, PBITMAPINFO pbi, HBITMAP hBMP, HDC hDC);
 
-public:
-	WindowRecorder();
-	~WindowRecorder();
-	std::string getWindowName();	
-	double getTime();	
-	void outputWindowName();	
-	bool windowChange();	
-	void start();
-	void stop();
+
 };
 
