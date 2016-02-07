@@ -237,6 +237,11 @@ bool WindowRecorder::windowChange()
 	return tmp;
 }
 
+void WindowRecorder::recordKeystroke(char keystroke)
+{
+	data.addKeystroke(keystroke);
+}
+
 void WindowRecorder::outputWindowName()
 {
 	char name[300];
@@ -254,34 +259,33 @@ void WindowRecorder::outputWindowName()
 		{
 			newWindow = true;
 			pastWindowName = windowName;
-
+			
 			if (windowName == "")
 			{
 				continue;
 			}
 
-			std::cout << pastWindowName << std::endl;
+			data.setWindowName(pastWindowName);
+			//std::cout << pastWindowName << std::endl;
 
 			/* Program is being tracked so take a screenshot */
 			if (programMap.find(pastWindowName) != programMap.end())
 			{
 				std::cout << "taking screen" << std::endl;
 				takeScreenshot(pastWindowName);
+				data.incrementScreenshotNum();
 			}
 
+			data.increaseTimeSpentInWindow(timeInSeconds/60);
+			/* @TODO: Fix problem of time not being displayed properly in the data object */
+			/* Output data to log */
 			out.open("log.txt", std::ofstream::app);
-			if (!start)
-			{
-				out << std::endl << "WINDOW: " << pastWindowName << std::endl;
-				start = true;
-			}
-			else
-			{
-				out << std::endl << "Minutes spent in the application: " << (timeInSeconds / 60) << std::endl;
-				out << "WINDOW: " << pastWindowName << std::endl;
-			}
-			timeStart = time(0);	/* Reset the timer */
+
+			std::cout << data.toString();
+			out << data.toString();
+					
 			out.close();
+			timeStart = time(0);	/* Reset the timer */
 		}
 	}
 }

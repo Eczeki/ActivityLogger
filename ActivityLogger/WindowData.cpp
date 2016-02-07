@@ -16,11 +16,13 @@ std::string WindowData::toString()
 	std::ostringstream str;
 	std::string time;
 	str << timeSpentInWindow;
-
-	return  "!Windowname : " + '"' + windowName + '"' + ",\n" +
+	
+	/* @TODO: Fix problem with this output string not displaying windowname */
+	return  "\nWindowName : " + '"' + windowName + '"' + ",\n" +
 			"Keystrokes : " + '"' + keyStrokes + '"' + ",\n" +
 			"Time in Application : " + '"' + str.str() + '"' + ",\n" +
-			"Screenshots : " + '"' + std::to_string(screenShotsNum) + '"' + "!";
+			"Screenshots : " + '"' + std::to_string(screenShotsNum) + '"' + ",\n" +
+			"Keystrokes Number : " + '"' + std::to_string(keyStrokes.length()) + '"' + "\n}\n";
 }
 
 /* Increases the time spent in window */
