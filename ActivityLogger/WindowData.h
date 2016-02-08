@@ -17,6 +17,7 @@ public:
 	void addKeystroke(char keystroke);
 	void setWindowName(std::string window);
 	void increaseTimeSpentInWindow(double time);
+	void resetAll();
 
 private:
 	int screenShotsNum;				/* Holds the number of screenshots taken by the user */

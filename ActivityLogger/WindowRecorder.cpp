@@ -277,7 +277,7 @@ void WindowRecorder::outputWindowName()
 			}
 
 			data.increaseTimeSpentInWindow(timeInSeconds/60);
-			/* @TODO: Fix problem of time not being displayed properly in the data object */
+			/* @TODO: Fix keystrokes not being displayed under the proper window */
 			/* Output data to log */
 			out.open("log.txt", std::ofstream::app);
 
@@ -285,6 +285,7 @@ void WindowRecorder::outputWindowName()
 			out << data.toString();
 					
 			out.close();
+			data.resetAll();		/* Clear all data */
 			timeStart = time(0);	/* Reset the timer */
 		}
 	}
