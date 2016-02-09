@@ -5,8 +5,8 @@ WindowData::WindowData()
 {
 	screenShotsNum = 0;
 	timeSpentInWindow = 0.0f;
-	windowName = "";
-	keyStrokes = "";
+	pastWindowName = windowName = "";
+	keyStrokes = "";	
 }
 
 /* Returns a string representation of the data */
@@ -18,7 +18,7 @@ std::string WindowData::toString()
 	str << timeSpentInWindow;
 	std::string end = ",\n";
 	
-	return  "{\nWindowName : " + windowName + end +
+	return  "{\nWindowName : " + pastWindowName + end +
 			"Keystrokes : " + keyStrokes + end +
 			"Time in Application : " + str.str() + end +
 			"Screenshots : " + std::to_string(screenShotsNum) + end +
@@ -52,9 +52,10 @@ void WindowData::addKeystroke(char keystroke)
 /* Returns all records to their original state */
 void WindowData::resetAll()
 {
+	pastWindowName = windowName;	
 	screenShotsNum = 0;
 	timeSpentInWindow = 0.0f;
-	windowName = "";
+	windowName = "";	
 	keyStrokes = "";
 }
 
