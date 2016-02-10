@@ -4,7 +4,7 @@
 WindowData::WindowData()
 {
 	screenShotsNum = 0;
-	timeSpentInWindow = 0.0f;
+	timeSpentInWindow = 0.0f;	
 	pastWindowName = windowName = "";
 	keyStrokes = "";	
 }
@@ -13,16 +13,25 @@ WindowData::WindowData()
 std::string WindowData::toString()
 {
 	/* Convert timeSpentInWindow to string */
-	std::ostringstream str;
-	std::string time;
+	std::ostringstream str, str_t;
+	int keystrokeSize = keyStrokes.length();
 	str << timeSpentInWindow;
+
+	if (keyStrokes.length() != 0) {
+		str_t << (double)keystrokeSize / timeSpentInWindow;
+	}
+	else {
+		str_t << 0.0f;
+	}
+
 	std::string end = ",\n";
 	
 	return  "{\nWindowName : " + pastWindowName + end +
 			"Keystrokes : " + keyStrokes + end +
 			"Time in Application : " + str.str() + end +
 			"Screenshots : " + std::to_string(screenShotsNum) + end +
-			"Keystrokes Number : " + std::to_string(keyStrokes.length()) + "\n}\n";
+			"Typing speed : " + str_t.str() + " per minute" + end +
+			"Keystrokes Number : " + std::to_string(keystrokeSize) + "\n}\n";
 }
 
 /* Increases the time spent in window */
@@ -54,7 +63,7 @@ void WindowData::resetAll()
 {
 	pastWindowName = windowName;	
 	screenShotsNum = 0;
-	timeSpentInWindow = 0.0f;
+	timeSpentInWindow = 0.0f;	
 	windowName = "";	
 	keyStrokes = "";
 }

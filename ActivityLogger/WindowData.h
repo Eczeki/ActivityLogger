@@ -21,7 +21,7 @@ public:
 
 private:
 	int screenShotsNum;				/* Holds the number of screenshots taken by the user */
-	double timeSpentInWindow;		/* Holds the time the user has spent in the given application */
+	double timeSpentInWindow;		/* Holds the time the user has spent in the given application */	
 	std::string windowName;			/* Holds the name of the window that the user is accesing */
 	std::string keyStrokes;			/* Holds the keystrokes that the user has pressed so far */
 	std::string pastWindowName;		/* Stores the previous window name */
