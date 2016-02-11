@@ -7,7 +7,8 @@ WindowRecorder::WindowRecorder()
 	newWindow = false;
 	pastWindowName = "";
 	timeStart = time(0);
-	timeInSeconds = 0.0;	
+	timeInSeconds = 0.0f;	
+	screenshotTime = 0.0f;
 
 	trackedPrograms();
 }
@@ -253,7 +254,16 @@ void WindowRecorder::outputWindowName()
 		currentWindowHWND = GetForegroundWindow();
 		GetWindowTextA(currentWindowHWND, name, 300);		
 		windowName = std::string(name);
-		timeInSeconds = difftime(time(0), timeStart);
+		timeInSeconds = difftime(time(0), timeStart);		
+	
+		/* Program is being tracked so take a screenshot every minute the program is active */
+		if ( (programMap.find(pastWindowName) != programMap.end()) && (timeInSeconds >= screenshotTime + 1) && !(fmod(timeInSeconds, screenInterval)) )
+		{
+			std::cout << "taking screen" << std::endl;
+			takeScreenshot(pastWindowName);
+			data.incrementScreenshotNum();
+			screenshotTime = timeInSeconds;			
+		}
 
 		if (pastWindowName != windowName)
 		{
@@ -277,7 +287,7 @@ void WindowRecorder::outputWindowName()
 			}
 
 			data.increaseTimeSpentInWindow(timeInSeconds/60);
-			/* @TODO: Fix keystrokes not being displayed under the proper window */
+			
 			/* Output data to log */
 			out.open("log.txt", std::ofstream::app);
 
@@ -287,6 +297,7 @@ void WindowRecorder::outputWindowName()
 			out.close();
 			data.resetAll();		/* Clear all data */
 			timeStart = time(0);	/* Reset the timer */
+			screenshotTime = 0.0f;	/* Reset screenshot time */
 		}
 	}
 }
