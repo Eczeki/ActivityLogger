@@ -2,14 +2,21 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <iphlpapi.h>
-#include <assert.h>
+#include <fstream>
 #include <iostream>
+#include <string>
 #pragma comment(lib, "Ws2_32.lib")
+
+/*
+ * This class handles the connection to a customized http server and 
+ * sends the to the server to be processed by the script running
+ * on it.
+ */
 
 class DataStreamer
 {
 public:
-	DataStreamer(std::string addr);
+	DataStreamer();
 	~DataStreamer();
 	void startUp();
 	void connectToServer();	
@@ -25,6 +32,7 @@ private:
 
 };
 
+/* Exceptions for the DataStreamer */
 class StartUpException : public std::exception
 {
 	virtual const char* what() const throw()

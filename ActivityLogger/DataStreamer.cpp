@@ -1,15 +1,22 @@
 #include "DataStreamer.h"
 
 
-DataStreamer::DataStreamer(std::string addr)
+DataStreamer::DataStreamer()
 {
-	this->addr = addr;	
+	/*std::ifstream in;
+	in.open("server.txt");
+
+	if (in.is_open())
+	{
+		std::getline(in, addr);		
+	}*/
+	addr = "eltsgaming.net";
 }
 
 void DataStreamer::startUp()
 {
 	/* Startup WSA */
-	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
+	iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);	
 	if (iResult != 0) {
 		std::cout << "WSAStartup failed: " + iResult << std::endl;
 		throw StartUpException();
@@ -72,9 +79,11 @@ bool DataStreamer::sendData(std::string data)
 std::string DataStreamer::getResponse()
 {
 	char recvbuf[1024];
+	memset(recvbuf, 0, 1024);
 	iResult = recv(sock, recvbuf, 1024, 0);
 	return std::string(recvbuf);
 }
+
 DataStreamer::~DataStreamer()
 {
 	closesocket(sock);
