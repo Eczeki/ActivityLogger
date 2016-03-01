@@ -12,7 +12,8 @@ class WindowData
 {
 public:
 	WindowData();	
-	std::string toString();			
+	std::string toString();
+	std::string toStringHTML();
 	void incrementScreenshotNum();
 	void addKeystroke(char keystroke);
 	void setWindowName(std::string window);

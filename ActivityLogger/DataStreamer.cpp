@@ -13,6 +13,7 @@ DataStreamer::DataStreamer()
 	addr = "eltsgaming.net";
 }
 
+/* Initializes the necessary variables to initialize a socket connection to a server */
 void DataStreamer::startUp()
 {
 	/* Startup WSA */
@@ -45,6 +46,7 @@ void DataStreamer::startUp()
 	}
 }
 
+/* Handles the connection to the server socket */
 void DataStreamer::connectToServer()
 {
 	/* Connect to server */
@@ -64,6 +66,7 @@ void DataStreamer::connectToServer()
 
 }
 
+/* Sends the data to socket in string format */
 bool DataStreamer::sendData(std::string data)
 {
 	iResult = send(sock, data.c_str(), (int)strlen(data.c_str()), 0);
@@ -76,6 +79,7 @@ bool DataStreamer::sendData(std::string data)
 	return true;
 }
 
+/* Receives a response from the server */
 std::string DataStreamer::getResponse()
 {
 	char recvbuf[1024];
@@ -84,6 +88,7 @@ std::string DataStreamer::getResponse()
 	return std::string(recvbuf);
 }
 
+/* Handles cleanup */
 DataStreamer::~DataStreamer()
 {
 	closesocket(sock);

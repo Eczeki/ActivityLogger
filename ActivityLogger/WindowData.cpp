@@ -34,6 +34,30 @@ std::string WindowData::toString()
 			"Keystrokes Number : " + std::to_string(keystrokeSize) + "\n}\n";
 }
 
+std::string WindowData::toStringHTML()
+{
+	/* Convert timeSpentInWindow to string */
+	std::ostringstream str, str_t;
+	int keystrokeSize = keyStrokes.length();
+	str << timeSpentInWindow;
+
+	if (keyStrokes.length() != 0) {
+		str_t << (double)keystrokeSize / timeSpentInWindow;
+	}
+	else {
+		str_t << 0.0f;
+	}
+   
+	std::string end = "%0A";
+
+	return  "{%0AWindowName&" + pastWindowName + end +
+			"Keystrokes&" + keyStrokes + end +
+			"TimeinApplication&" + str.str() + end +
+			"Screenshots&" + std::to_string(screenShotsNum) + end +
+			"TypingSpeed&" + str_t.str() + " per minute" + end +
+			"KeystrokesNumber&" + std::to_string(keystrokeSize) + "%0A}%0A";
+}
+
 /* Increases the time spent in window */
 void WindowData::increaseTimeSpentInWindow(double time)
 {
